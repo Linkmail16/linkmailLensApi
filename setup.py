@@ -11,7 +11,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Linkmail',
-    author_email='',  # Puedes añadir tu email aquí si lo deseas
+    author_email='',  
     url='https://github.com/Linkmail16/linkmailLensApi',
     download_url='https://github.com/Linkmail16/linkmailLensApi/archive/refs/tags/v0.3.tar.gz',
     keywords=['api', 'google', 'google lens'],
