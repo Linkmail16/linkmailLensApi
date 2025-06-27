@@ -6,7 +6,7 @@ with open("./README.md", "r", encoding="utf-8") as readme:
 setup(
     name='linkmailLensApi',
     packages=['linkmailLensApi'],
-    version='0.9',
+    version='1.0',
     description='Api no oficial de Google lens creada por mi.',
     long_description=long_description,
     long_description_content_type='text/markdown',
