@@ -430,21 +430,38 @@ class GoogleLensMatch:
     
     @property
     def response(self):
-        """
-        Devuelve los resultados simplificados y guarda en archivo JSON
-        """
-        with open('googleLensResults.json', 'w', encoding='utf-8') as json_file:
-            json.dump(self._simplified_results, json_file, ensure_ascii=False, indent=2)
-        return self._simplified_results
+     """
+    Devuelve los resultados simplificados y guarda en archivo JSON
+    """
+   
+     current_dir = os.getcwd()
+    
+   
+     file_path = os.path.join(current_dir, 'googleLensResults.json')
+    
+   
+     with open(file_path, 'w', encoding='utf-8') as json_file:
+        json.dump(self._simplified_results, json_file, ensure_ascii=False, indent=2)
+    
+     return self._simplified_results
+
     
     @property
     def realResponse(self):
-        """
-        Devuelve los resultados completos y guarda en archivo JSON
-        """
-        with open('googleLensRealResponse.json', 'w', encoding='utf-8') as json_file:
-            json.dump(self._complete_results, json_file, ensure_ascii=False, indent=2)
-        return self._complete_results
+     """
+    Devuelve los resultados completos y guarda en archivo JSON
+    """
+  
+     current_dir = os.getcwd()
+    
+    
+     file_path = os.path.join(current_dir, 'googleLensRealResponse.json')
+    
+   
+     with open(file_path, 'w', encoding='utf-8') as json_file:
+        json.dump(self._complete_results, json_file, ensure_ascii=False, indent=2)
+    
+     return self._complete_results
     
     @property
     def pages(self):
