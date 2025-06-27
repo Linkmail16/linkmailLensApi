@@ -26,7 +26,7 @@ pip install linkmailLensApi
 - Search by local image file
 - Simplified and complete results
 - Automatic extraction of URLs, titles, dates, and resolutions
-- Get results as Python objects without saving files
+- Automatic saving of results in JSON format
 
 ## ES: Características
 
@@ -34,7 +34,7 @@ pip install linkmailLensApi
 - Búsqueda por archivo local de imagen
 - Resultados simplificados y completos
 - Extracción automática de URLs, títulos, fechas y resoluciones
-- Obtener resultados como objetos Python sin guardar archivos
+- Guardado automático de resultados en formato JSON
 
 ## EN: Usage
 
@@ -55,13 +55,9 @@ urls = matches.pages
 for url in urls:
     print(url)
 
-# Get results without saving to file
-results = matches.response
-
-# If you want to save results to a custom file:
-import json
-with open('my_results.json', 'w', encoding='utf-8') as f:
-    json.dump(results, f, ensure_ascii=False, indent=2)
+# Results are automatically saved to:
+# - googleLensResults.json (simplified version)
+# - googleLensRealResponse.json (complete response)
 ```
 
 ### Search by local image
@@ -73,8 +69,8 @@ from linkmailLensApi import lenSearchImg
 image_path = "path/to/your/image.jpg"
 matches = lenSearchImg(image_path)
 
-# Get detailed results as Python objects
-results = matches.response
+# Get detailed results
+results = matches.response  # Also saves results to googleLensResults.json
 
 # Access specific information
 for result in results:
@@ -104,13 +100,9 @@ urls = matches.pages
 for url in urls:
     print(url)
 
-# Obtener resultados sin guardar en archivo
-resultados = matches.response
-
-# Si quieres guardar los resultados en un archivo personalizado:
-import json
-with open('mis_resultados.json', 'w', encoding='utf-8') as f:
-    json.dump(resultados, f, ensure_ascii=False, indent=2)
+# Los resultados se guardan automáticamente en:
+# - googleLensResults.json (versión simplificada)
+# - googleLensRealResponse.json (respuesta completa)
 ```
 
 ### Buscar por imagen local
@@ -122,11 +114,11 @@ from linkmailLensApi import lenSearchImg
 image_path = "ruta/a/tu/imagen.jpg"
 matches = lenSearchImg(image_path)
 
-# Obtener resultados detallados como objetos Python
-resultados = matches.response
+# Obtener resultados detallados
+results = matches.response  # También guarda los resultados en googleLensResults.json
 
 # Acceder a información específica
-for result in resultados:
+for result in results:
     print(f"Título: {result['title']}")
     print(f"URL: {result['url']}")
     print(f"Resolución: {result['resolution']}")
@@ -138,16 +130,16 @@ for result in resultados:
 
 Each results object provides the following properties:
 
-- `matches.response` - Returns the simplified results as Python objects (doesn't save any files)
-- `matches.realResponse` - Returns the complete results as Python objects (doesn't save any files)
+- `matches.response` - Returns the simplified results and saves to "googleLensResults.json"
+- `matches.realResponse` - Returns the complete results and saves to "googleLensRealResponse.json"
 - `matches.pages` - Returns only the URLs of all found results
 
 ## ES: Propiedades disponibles
 
 Cada objeto de resultados proporciona las siguientes propiedades:
 
-- `matches.response` - Devuelve los resultados simplificados como objetos Python (no guarda archivos)
-- `matches.realResponse` - Devuelve los resultados completos como objetos Python (no guarda archivos)
+- `matches.response` - Devuelve los resultados simplificados y guarda en "googleLensResults.json"
+- `matches.realResponse` - Devuelve los resultados completos y guarda en "googleLensRealResponse.json"
 - `matches.pages` - Devuelve solo las URLs de todos los resultados encontrados
 
 ## EN: Results Format
@@ -221,7 +213,7 @@ else:
     print("No matches found for this image")
 ```
 
-### Saving results to a file
+### Local search with detailed information
 
 ```python
 from linkmailLensApi import lenSearchImg
@@ -231,12 +223,8 @@ import json
 image_path = "C:/Users/user/downloads/image.jpg"
 matches = lenSearchImg(image_path)
 
-# Get results as Python objects
+# Access complete results
 results = matches.response
-
-# Save complete results to a file
-with open('search_results.json', 'w', encoding='utf-8') as f:
-    json.dump(results, f, ensure_ascii=False, indent=2)
 
 # Filter results by date (only those with a date)
 dated_results = [r for r in results if r["date"]]
@@ -268,7 +256,7 @@ else:
     print("No se encontraron coincidencias para esta imagen")
 ```
 
-### Guardar resultados en un archivo
+### Búsqueda local con información detallada
 
 ```python
 from linkmailLensApi import lenSearchImg
@@ -278,20 +266,16 @@ import json
 image_path = "C:/Users/usuario/descargas/imagen.jpg"
 matches = lenSearchImg(image_path)
 
-# Obtener resultados como objetos Python
-resultados = matches.response
-
-# Guardar resultados completos en un archivo
-with open('resultados_busqueda.json', 'w', encoding='utf-8') as f:
-    json.dump(resultados, f, ensure_ascii=False, indent=2)
+# Acceder a los resultados completos
+results = matches.response
 
 # Filtrar resultados por fecha (solo los que tienen fecha)
-resultados_con_fecha = [r for r in resultados if r["date"]]
-print(f"Resultados con fecha: {len(resultados_con_fecha)}")
+dated_results = [r for r in results if r["date"]]
+print(f"Resultados con fecha: {len(dated_results)}")
 
 # Guardar solo los resultados con fecha en un archivo separado
 with open('resultados_con_fecha.json', 'w', encoding='utf-8') as f:
-    json.dump(resultados_con_fecha, f, ensure_ascii=False, indent=2)
+    json.dump(dated_results, f, ensure_ascii=False, indent=2)
 ```
 
 ## EN: Notes
@@ -299,14 +283,12 @@ with open('resultados_con_fecha.json', 'w', encoding='utf-8') as f:
 - This API is not official and may stop working if Google changes its interface
 - For optimal results, use clear images with good resolution
 - The response time may vary depending on the complexity of the image
-- The API returns Python objects directly; it doesn't save files automatically. You need to use `json.dump()` if you want to save results to files.
 
 ## ES: Notas
 
 - Esta API no es oficial y podría dejar de funcionar si Google cambia su interfaz
 - Para resultados óptimos, usa imágenes claras y con buena resolución
 - El tiempo de respuesta puede variar dependiendo de la complejidad de la imagen
-- La API devuelve objetos Python directamente; no guarda archivos automáticamente. Necesitas usar `json.dump()` si quieres guardar los resultados en archivos.
 
 ## EN: Requirements
 
